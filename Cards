@@ -1,47 +1,18 @@
 import pygame
-import random
-class card:
-    def __init__(self, colour, symbol, shading, number):
-        self.colour = colour #colour on card (green, purple, red)
-        self.symbol = symbol #symbol on card (diamond, oval, squiggle)
-        self.shading = shading #shading on card (empty, filled, shaded)
-        self.number = number #number on card (1, 2, 3)
-        
-    def __str__(self):
-        return f"{self.colour}{self.symbol}{self.shading}{self.number}"
-    
-    def check_set(nest_list):
-        for i in range(0, 3):
-            for j in range(0, 4):
-                if nest_list[i][j] == nest_list[(i+1)%3][j] and nest_list[i][j] != nest_list[i-1][j]:
-                    return False
-                    break
-        return True
-    def pick_set(open_cards):
-        n = len(open_cards)
-        for i in range(0, n-2):
-            for j in range(1, n-1):
-                for k in range(2, n):
-                    if i != j != k and card.check_set([open_cards[i], open_cards[j], open_cards[k]]) == True:
-                        return [open_cards[i], open_cards[j], open_cards[k]]
-                        break
-        return False
-    def random(nest_list):
-        n = len(nest_list)-1
-        index = random.randint(0, n)
-        card = nest_list[index]
-        nest_list.remove(card)
-        return card
-
+import button
+import card
 # Initialize Pygame
 pygame.init()
 
+#create stack of cards in number form
 stack = []
 for i in range(1, 4):
     for j in range(1, 4):
         for k in range(1, 4):
             for l in range(1, 4):
                 stack.append([i, j, k, l])
+
+#create stach of cards in word form
 dict_colour = {1:'green', 2:'purple', 3:'red'}
 dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
 dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
@@ -51,111 +22,316 @@ for i in range(1, 4):
         for k in range(1, 4):
             for l in range(1, 4):
                 stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
-                
+
 # Set up the display
 screen = pygame.display.set_mode((1200, 800))
-pygame.display.set_caption("Detect Screen Press")
+pygame.display.set_caption("SET game")
 
-class Button():
-    def __init__(self, x, y, image, scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-        self.rect = self. image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
-        
-    def draw(self):
-        action = False
-        pos = pygame.mouse.get_pos()
-        
-        if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                action = True
-                
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-            
-        screen.blit(self.image, (self.rect.x, self.rect.y))
-        return action
     
 #load images
-card1_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card2_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card3_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card4_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card5_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card6_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card7_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card8_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card9_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card10_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card11_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card12_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card13_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card14_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
-card15_img = pygame.image.load('kaarten/' + card.random(stack_name) + '.gif').convert_alpha()
+submit_img = pygame.image.load('submit_button.png').convert_alpha()
+card1 = card.Card.random(stack, stack_name)
+card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
+card2 = card.Card.random(stack, stack_name)
+card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
+card3 = card.Card.random(stack, stack_name)
+card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
+card4 = card.Card.random(stack, stack_name)
+card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
+card5 = card.Card.random(stack, stack_name)
+card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
+card6 = card.Card.random(stack, stack_name)
+card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
+card7 = card.Card.random(stack, stack_name)
+card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
+card8 = card.Card.random(stack, stack_name)
+card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
+card9 = card.Card.random(stack, stack_name)
+card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
+card10 = card.Card.random(stack, stack_name)
+card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
+card11 = card.Card.random(stack, stack_name)
+card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
+card12 = card.Card.random(stack, stack_name)
+card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
+card13 = card.Card.random(stack, stack_name)
+card13_img = pygame.image.load('kaarten/' + card13[1] + '.gif').convert_alpha()
+card14 = card.Card.random(stack, stack_name)
+card14_img = pygame.image.load('kaarten/' + card14[1] + '.gif').convert_alpha()
+card15 = card.Card.random(stack, stack_name)
+card15_img = pygame.image.load('kaarten/' + card15[1] + '.gif').convert_alpha()
+
 #create button
-card1_button = Button(65, 65, card1_img, 1)
-card2_button = Button(65, 300, card2_img, 1)
-card3_button = Button(65, 525, card3_img, 1)
-card4_button = Button(200, 65, card4_img, 1)
-card5_button = Button(200, 300, card5_img, 1)
-card6_button = Button(200, 525, card6_img, 1)
-card7_button = Button(335, 65, card7_img, 1)
-card8_button = Button(335, 300, card8_img, 1)
-card9_button = Button(335, 525, card9_img, 1)
-card10_button = Button(470, 65, card10_img, 1)
-card11_button = Button(470, 300, card11_img, 1)
-card12_button = Button(470, 525, card12_img, 1)
-card13_button = Button(605, 65, card13_img, 1)
-card14_button = Button(605, 300, card14_img, 1)
-card15_button = Button(605, 525, card15_img, 1)
+submit_button = button.Button(800, 500, submit_img, 0.5)
+card1_button = button.Button(65, 65, card1_img, 1)
+card2_button = button.Button(65, 300, card2_img, 1)
+card3_button = button.Button(65, 525, card3_img, 1)
+card4_button = button.Button(200, 65, card4_img, 1)
+card5_button = button.Button(200, 300, card5_img, 1)
+card6_button = button.Button(200, 525, card6_img, 1)
+card7_button = button.Button(335, 65, card7_img, 1)
+card8_button = button.Button(335, 300, card8_img, 1)
+card9_button = button.Button(335, 525, card9_img, 1)
+card10_button = button.Button(470, 65, card10_img, 1)
+card11_button = button.Button(470, 300, card11_img, 1)
+card12_button = button.Button(470, 525, card12_img, 1)
+card13_button = button.Button(605, 65, card13_img, 1)
+card14_button = button.Button(605, 300, card14_img, 1)
+card15_button = button.Button(605, 525, card15_img, 1)
+
+#determine card selected 
+card1_selected = False
+card2_selected = False
+card3_selected = False
+card4_selected = False
+card5_selected = False
+card6_selected = False
+card7_selected = False
+card8_selected = False
+card9_selected = False
+card10_selected = False
+card11_selected = False
+card12_selected = False
+card13_selected = False
+card14_selected = False
+card15_selected = False
+
 
 # Main loop
+selected = []
 running = True
 while running:
     # Fill the screen with a color (optional)
     screen.fill((102, 50, 152))
     
-    if card1_button.draw():
-        card1_button = Button(60, 55, card1_img, 1.1)
-    if card2_button.draw():
-        print('clicked card2')
-    if card3_button.draw():
-        print('clicked card3')
-    if card4_button.draw():
-        print('clicked card4')
-    if card5_button.draw():
-        print('clicked card5')
-    if card6_button.draw():
-        print('clicked card6')
-    if card7_button.draw():
-        print('clicked card7')
-    if card8_button.draw():
-        print('clicked card8')
-    if card9_button.draw():
-        print('clicked card9')
-    if card10_button.draw():
-        print('clicked card10')
-    if card11_button.draw():
-        print('clicked card11')
-    if card12_button.draw():
-        print('clicked card12')
-    if card13_button.draw():
-        print('clicked card13')
-    if card14_button.draw():
-        print('clicked card14')
-    if card15_button.draw():
-        print('clicked card15')
-    
+    #create cards on screen
+    if card1_button.draw(screen):
+        if len(selected) < 3:
+            if not card1_selected:
+                card1_button = button.Button(60, 55, card1_img, 1.1)
+                card1_selected = True
+                selected.append(card1[0])
+            elif card1_selected:
+                card1_button = button.Button(65, 65, card1_img, 1)
+                card1_selected = False
+                selected.remove(card1[0])
+        elif card1_selected:
+            card1_button = button.Button(65, 65, card1_img, 1)
+            card1_selected = False
+            selected.remove(card1[0])
+    if card2_button.draw(screen):
+        if len(selected) < 3:
+            if not card2_selected:
+                card2_button = button.Button(60, 290, card2_img, 1.1)
+                card2_selected = True
+                selected.append(card2[0])
+            elif card2_selected:
+                card2_button = button.Button(65, 300, card2_img, 1)
+                card2_selected = False
+                selected.remove(card2[0])
+        elif card2_selected:
+            card2_button = button.Button(65, 300, card2_img, 1)
+            card2_selected = False
+            selected.remove(card2[0])
+    if card3_button.draw(screen):
+        if len(selected) < 3:
+            if not card3_selected:
+                card3_button = button.Button(60, 515, card3_img, 1.1)
+                card3_selected = True
+                selected.append(card3[0])
+            elif card3_selected:
+                card3_button = button.Button(65, 525, card3_img, 1)
+                card3_selected = False
+                selected.remove(card3[0])
+        elif card3_selected:
+            card3_button = button.Button(65, 525, card3_img, 1)
+            card3_selected = False
+            selected.remove(card3[0])
+    if card4_button.draw(screen):
+        if len(selected) < 3:
+            if not card4_selected:
+                card4_button = button.Button(195, 55, card4_img, 1.1)
+                card4_selected = True
+                selected.append(card4[0])
+            elif card4_selected:
+                card4_button = button.Button(200, 65, card4_img, 1)
+                card4_selected = False
+                selected.remove(card4[0])
+        elif card4_selected:
+            card4_button = button.Button(200, 65, card4_img, 1)
+            card4_selected = False
+            selected.remove(card4[0])
+    if card5_button.draw(screen):
+        if len(selected) < 3:
+            if not card5_selected:
+                card5_button = button.Button(195, 290, card5_img, 1.1)
+                card5_selected = True
+                selected.append(card5[0])
+            elif card5_selected:
+                card5_button = button.Button(200, 300, card5_img, 1)
+                card5_selected = False
+                selected.remove(card5[0])
+        elif card5_selected:
+            card5_button = button.Button(200, 300, card5_img, 1)
+            card5_selected = False
+            selected.remove(card5[0])
+    if card6_button.draw(screen):
+        if len(selected) < 3:
+            if not card6_selected:
+                card6_button = button.Button(195, 515, card6_img, 1.1)
+                card6_selected = True
+                selected.append(card6[0])
+            elif card6_selected:
+                card6_button = button.Button(200, 525, card6_img, 1)
+                card6_selected = False
+                selected.remove(card6[0])
+        elif card6_selected:
+            card6_button = button.Button(200, 525, card6_img, 1)
+            card6_selected = False
+            selected.remove(card6[0])
+    if card7_button.draw(screen):
+        if len(selected) < 3:
+            if not card7_selected:
+                card7_button = button.Button(330, 55, card7_img, 1.1)
+                card7_selected = True
+                selected.append(card7[0])
+            elif card7_selected:
+                card7_button = button.Button(335, 65, card7_img, 1)
+                card7_selected = False
+                selected.remove(card7[0])
+        elif card7_selected:
+            card7_button = button.Button(335, 65, card7_img, 1)
+            card7_selected = False
+            selected.remove(card7[0])
+    if card8_button.draw(screen):
+        if len(selected) < 3:
+            if not card8_selected:
+                card8_button = button.Button(330, 290, card8_img, 1.1)
+                card8_selected = True
+                selected.append(card8[0])
+            elif card8_selected:
+                card8_button = button.Button(335, 300, card8_img, 1)
+                card8_selected = False
+                selected.remove(card8[0])
+        elif card8_selected:
+            card8_button = button.Button(335, 300, card8_img, 1)
+            card8_selected = False
+            selected.remove(card8[0])
+    if card9_button.draw(screen):
+        if len(selected) < 3:
+            if not card9_selected:
+                card9_button = button.Button(330, 515, card9_img, 1.1)
+                card9_selected = True
+                selected.append(card9[0])
+            elif card9_selected:
+                card9_button = button.Button(335, 525, card9_img, 1)
+                card9_selected = False
+                selected.remove(card9[0])
+        elif card9_selected:
+            card9_button = button.Button(335, 525, card9_img, 1)
+            card9_selected = False
+            selected.remove(card9[0])
+    if card10_button.draw(screen):
+        if len(selected) < 3:
+            if not card10_selected:
+                card10_button = button.Button(465, 55, card10_img, 1.1)
+                card10_selected = True
+                selected.append(card10[0])
+            elif card10_selected:
+                card10_button = button.Button(470, 65, card10_img, 1)
+                card10_selected = False
+                selected.remove(card10[0])
+        elif card10_selected:
+            card10_button = button.Button(470, 65, card10_img, 1)
+            card10_selected = False
+            selected.remove(card10[0])
+    if card11_button.draw(screen):
+        if len(selected) < 3:
+            if not card11_selected:
+                card11_button = button.Button(465, 290, card11_img, 1.1)
+                card11_selected = True
+                selected.append(card11[0])
+            elif card11_selected:
+                card11_button = button.Button(470, 300, card11_img, 1)
+                card11_selected = False
+                selected.remove(card11[0])
+        elif card11_selected:
+            card11_button = button.Button(470, 300, card11_img, 1)
+            card11_selected = False
+            selected.remove(card11[0])
+    if card12_button.draw(screen):
+        if len(selected) < 3:
+            if not card12_selected:
+                card12_button = button.Button(465, 515, card12_img, 1.1)
+                card12_selected = True
+                selected.append(card12[0])
+            elif card12_selected:
+                card12_button = button.Button(470, 525, card12_img, 1)
+                card12_selected = False
+                selected.remove(card12[0])
+        elif card12_selected:
+            card12_button = button.Button(470, 525, card12_img, 1)
+            card12_selected = False
+            selected.remove(card12[0])
+    if card13_button.draw(screen):
+        if len(selected) < 3:
+            if not card13_selected:
+                card13_button = button.Button(600, 55, card13_img, 1.1)
+                card13_selected = True
+                selected.append(card13[0])
+            elif card13_selected:
+                card13_button = button.Button(605, 65, card13_img, 1)
+                card13_selected = False
+                selected.remove(card13[0])
+        elif card13_selected:
+            card13_button = button.Button(605, 65, card13_img, 1)
+            card13_selected = False
+            selected.remove(card13[0])
+    if card14_button.draw(screen):
+        if len(selected) < 3:
+            if not card14_selected:
+                card14_button = button.Button(600, 290, card14_img, 1.1)
+                card14_selected = True
+                selected.append(card14[0])
+            elif card14_selected:
+                card14_button = button.Button(605, 300, card14_img, 1)
+                card14_selected = False
+                selected.remove(card14[0])
+        elif card14_selected:
+            card14_button = button.Button(605, 300, card14_img, 1)
+            card14_selected = False
+            selected.remove(card14[0])
+    if card15_button.draw(screen):
+        if len(selected) < 3:
+            if not card15_selected:
+                card15_button = button.Button(600, 515, card15_img, 1.1)
+                card15_selected = True
+                selected.append(card15[0])
+            elif card15_selected:
+                card15_button = button.Button(605, 525, card15_img, 1)
+                card15_selected = False
+                selected.remove(card15[0])
+        elif card15_selected:
+            card15_button = button.Button(605, 525, card15_img, 1)
+            card15_selected = False
+            selected.remove(card15[0])
+            
+    #create submit button on screen:
+    if submit_button.draw(screen):
+        if len(selected) == 3:
+            if card.Card.check_set(selected):
+                print('Het is een SET!!')
+            else:
+                print('Je bakt er ook helemaal niks van')
+        else:
+            print('Je moet 3 kaarten kiezen')
+            
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # Update the display
-    pygame.display.flip()
+    pygame.display.update()
 
 # Quit Pygame
 pygame.quit()
