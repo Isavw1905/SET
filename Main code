@@ -1,4 +1,6 @@
+
 import pygame
+import pygame.freetype
 import button
 import card
 import time
@@ -14,7 +16,7 @@ for i in range(1, 4):
             for l in range(1, 4):
                 stack.append([i, j, k, l])
 
-#create stach of cards in word form
+#create stack of cards in word form
 dict_colour = {1:'green', 2:'purple', 3:'red'}
 dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
 dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
@@ -67,7 +69,7 @@ card15 = card.Card.random(stack, stack_name)
 card15_img = pygame.image.load('kaarten/' + card15[1] + '.gif').convert_alpha()
 
 #create button
-stack_button = button.Button(900, 35, stack_img, 0.7)
+stack_button = button.Button(775, 85, stack_img, 0.2)
 submit_button = button.Button(740, 505, submit_img, 0.5)
 card1_button = button.Button(35, 35, card1_img, 1)
 card2_button = button.Button(35, 270, card2_img, 1)
@@ -81,9 +83,9 @@ card9_button = button.Button(305, 495, card9_img, 1)
 card10_button = button.Button(440, 35, card10_img, 1)
 card11_button = button.Button(440, 270, card11_img, 1)
 card12_button = button.Button(440, 495, card12_img, 1)
-card13_button = button.Button(575, 35, card13_img, 1)
-card14_button = button.Button(575, 270, card14_img, 1)
-card15_button = button.Button(575, 495, card15_img, 1)
+#card13_button = button.Button(575, 35, card13_img, 1)
+#card14_button = button.Button(575, 270, card14_img, 1)
+#card15_button = button.Button(575, 495, card15_img, 1)
 
 #determine card selected 
 card1_selected = False
@@ -102,7 +104,7 @@ card13_selected = False
 card14_selected = False
 card15_selected = False
 
-#create text
+#create text for the scoreboard
 Player = font.render('Player:', True, (255, 255, 255))
 Computer = font.render('Computer:', True, (255, 255, 255))
 sp = 0
@@ -293,7 +295,7 @@ while running:
             card12_button = button.Button(440, 495, card12_img, 1)
             card12_selected = False
             selected.remove(card12)
-    if card13_button.draw(screen):
+    # card13_button.draw(screen):
         if len(selected) < 3:
             if not card13_selected:
                 card13_button = button.Button(570, 25, card13_img, 1.1)
@@ -307,7 +309,7 @@ while running:
             card13_button = button.Button(575, 35, card13_img, 1)
             card13_selected = False
             selected.remove(card13)
-    if card14_button.draw(screen):
+    #if card14_button.draw(screen):
         if len(selected) < 3:
             if not card14_selected:
                 card14_button = button.Button(570, 260, card14_img, 1.1)
@@ -321,7 +323,7 @@ while running:
             card14_button = button.Button(575, 270, card14_img, 1)
             card14_selected = False
             selected.remove(card14)
-    if card15_button.draw(screen):
+    #if card15_button.draw(screen):
         if len(selected) < 3:
             if not card15_selected:
                 card15_button = button.Button(570, 485, card15_img, 1.1)
@@ -345,7 +347,7 @@ while running:
     
     #create stack
     stack_button.draw(screen)
-    screen.blit(stack_count, (800, 35))
+    screen.blit(stack_count, (860, 35))
     
     #create submit button on screen:
     if submit_button.draw(screen):
@@ -354,7 +356,7 @@ while running:
                 #give player point
                 sp += 1
                 score_Player = font.render(str(sp), True, (255, 255, 255))
-                #remove cards from table
+                #remove cards from table and replace with new random cards
                 for i in range(0, 3):
                     on_table.remove(selected[i])
                 if card1 in selected:
@@ -363,90 +365,105 @@ while running:
                     card1_button = button.Button(35, 35, card1_img, 1)
                     card1_selected = False
                     on_table.append(card1)
+                    set_found = True
                 if card2 in selected:
                     card2 = card.Card.random(stack, stack_name)
                     card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
                     card2_button = button.Button(35, 270, card2_img, 1)
                     card2_selected = False
                     on_table.append(card2)
+                    set_found = True
                 if card3 in selected:
                     card3 = card.Card.random(stack, stack_name)
                     card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
                     card3_button = button.Button(35, 495, card3_img, 1)
                     card3_selected = False
                     on_table.append(card3)
+                    set_found = True
                 if card4 in selected:
                     card4 = card.Card.random(stack, stack_name)
                     card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
                     card4_button = button.Button(170, 35, card4_img, 1)
                     card4_selected = False
                     on_table.append(card4)
+                    set_found = True
                 if card5 in selected:
                     card5 = card.Card.random(stack, stack_name)
                     card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
                     card5_button = button.Button(170, 270, card5_img, 1)
                     card5_selected = False
                     on_table.append(card5)
+                    set_found = True
                 if card6 in selected:
                     card6 = card.Card.random(stack, stack_name)
                     card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
                     card6_button = button.Button(170, 495, card6_img, 1)
                     card6_selected = False
                     on_table.append(card6)
+                    set_found = True
                 if card7 in selected:
                     card7 = card.Card.random(stack, stack_name)
                     card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
                     card7_button = button.Button(305, 35, card7_img, 1)
                     card7_selected = False
                     on_table.append(card7)
+                    set_found = True
                 if card8 in selected:
                     card8 = card.Card.random(stack, stack_name)
                     card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
                     card8_button = button.Button(305, 270, card8_img, 1)
                     card8_selected = False
                     on_table.append(card8)
+                    set_found = True
                 if card9 in selected:
                     card9 = card.Card.random(stack, stack_name)
                     card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
                     card9_button = button.Button(305, 495, card9_img, 1)
                     card9_selected = False
                     on_table.append(card9)
+                    set_found = True
                 if card10 in selected:
                     card10 = card.Card.random(stack, stack_name)
                     card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
                     card10_button = button.Button(440, 35, card10_img, 1)
                     card10_selected = False
                     on_table.append(card10)
+                    set_found = True
                 if card11 in selected:
                     card11 = card.Card.random(stack, stack_name)
                     card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
                     card11_button = button.Button(440, 270, card11_img, 1)
                     card11_selected = False
                     on_table.append(card11)
+                    set_found = True
                 if card12 in selected:
                     card12 = card.Card.random(stack, stack_name)
                     card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
                     card12_button = button.Button(440, 495, card12_img, 1)
                     card12_selected = False
                     on_table.append(card12)
+                    set_found = True
                 if card13 in selected:
                     card13 = card.Card.random(stack, stack_name)
                     card13_img = pygame.image.load('kaarten/' + card13[1] + '.gif').convert_alpha()
                     card13_button = button.Button(575, 35, card13_img, 1)
                     card13_selected = False
                     on_table.append(card13)
+                    set_found = True
                 if card14 in selected:
                     card14 = card.Card.random(stack, stack_name)
                     card14_img = pygame.image.load('kaarten/' + card14[1] + '.gif').convert_alpha()
                     card14_button = button.Button(575, 270, card14_img, 1)
                     card14_selected = False
                     on_table.append(card14)
+                    set_found = True
                 if card15 in selected:
                     card15 = card.Card.random(stack, stack_name)
                     card15_img = pygame.image.load('kaarten/' + card15[1] + '.gif').convert_alpha()
                     card15_button = button.Button(575, 495, card15_img, 1)
                     card15_selected = False
                     on_table.append(card15)
+                    set_found = True
                 selected = []
                 stack_count = font.render(str(len(stack)), True, (255, 255, 255))
             else:
