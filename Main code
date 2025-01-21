@@ -151,6 +151,9 @@ selected_rect15 = pygame.Rect(560, 490, 130, 230)
 
 
 # Main loop
+time_while_paused = 0
+unpaused_lst = [0]
+paused_lst = [0]
 selected = []
 selected_computer = []
 on_table = [card1, card2, card3, card4, 
@@ -190,7 +193,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and not help_not_needed:
                 help_not_needed = True
-                unpaused_time = pygame.time.get_ticks()
+                unpaused_lst.append(pygame.time.get_ticks())
+
     # Fill the screen with a color
     screen.fill(PURPLE)
     
@@ -200,8 +204,8 @@ while running:
     else:
         if begin_screen:
             screen.blit(Main_menu, (325, 75))
-            paused_time = 0
-            unpaused_time = 0
+            paused_lst = []
+            unpaused_lst = []
             #decide difficulty and start game
             if easy_button.draw(screen):
                 timer = 61000
@@ -225,7 +229,7 @@ while running:
             current_time = pygame.time.get_ticks()
             if instructions_button.draw(screen):
                 help_not_needed = False
-                paused_time = pygame.time.get_ticks()
+                paused_lst.append(pygame.time.get_ticks())
                 
             #create rectangles for selecting
             if card1_selected:
@@ -258,8 +262,15 @@ while running:
                 pygame.draw.rect(screen, YELLOW, selected_rect14)
             if card15_selected:
                 pygame.draw.rect(screen, YELLOW, selected_rect15)
-        
-            
+
+            #determine the time that passed while the game was paused
+            for i in paused_lst:
+                time_while_paused -= i
+                paused_lst.remove(i)
+            for j in unpaused_lst:
+                time_while_paused += j
+                unpaused_lst.remove(j)
+
             #create cards on screen
             if new_card1:
                 if card1 in on_table:
@@ -465,7 +476,7 @@ while running:
             screen.blit(score_Computer, (1000, 325))
             
             #display time left for player
-            time_left = font.render(str(int((timer - current_time + start_time + unpaused_time - paused_time)/1000)), True, WHITE)
+            time_left = font.render(str(int((timer - current_time + start_time + time_while_paused)/1000)), True, WHITE)
             screen.blit(time_left, (1, 1))
             
             #create stack
@@ -474,8 +485,10 @@ while running:
             
             #create submit button on screen:
             if submit_button.draw(screen):
-                unpaused_time = 0
-                paused_time = 0
+                #reset the time that was paused, because this should only hold for one round
+                unpaused_lst = []
+                paused_lst = []
+                time_while_paused = 0
                 card1_selected = False
                 card2_selected = False
                 card3_selected = False
@@ -648,9 +661,11 @@ while running:
                     print(card.Card.pick_set(on_table))
                     #reset selected
                     selected = []
-            elif timer - current_time + start_time + unpaused_time - paused_time < 0 and help_not_needed:
-                unpaused_time = 0
-                paused_time = 0
+            elif timer - current_time + start_time + time_while_paused < 0 and help_not_needed:
+                #reset the time that was paused, because this should only hold for one round
+                unpaused_lst = []
+                paused_lst = []
+                time_while_paused = 0
                 card1_selected = False
                 card2_selected = False
                 card3_selected = False
