@@ -218,9 +218,14 @@ while running:
             new_card15 = True
         #if space exit instructions
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and not help_not_needed:
-                help_not_needed = True
-                unpaused_time = pygame.time.get_ticks()
+            #you can pause and unpause the game by clicking the space button.
+            if event.key == pygame.K_SPACE:
+                if not help_not_needed:
+                    help_not_needed = True
+                    unpaused_time = pygame.time.get_ticks()
+                elif help_not_needed:
+                    help_not_needed = False
+                    paused_time = pygame.time.get_ticks()
             if win_screen or loss_screen or draw_screen:
                 win_screen, loss_screen, draw_screen = False, False, False
                 begin_screen = True
