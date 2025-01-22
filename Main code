@@ -203,7 +203,7 @@ while running:
         help_not_needed = True
         game_screen = False
     
-    #normale game-loop
+    #normal game-loop
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
