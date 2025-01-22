@@ -1,3 +1,4 @@
+
 import pygame
 import button
 import card
@@ -54,6 +55,10 @@ medium_img = pygame.image.load('Medium_button.png').convert_alpha()
 hard_img = pygame.image.load('Hard_button.png').convert_alpha()
 impossible_img = pygame.image.load('Impossible_button.png').convert_alpha()
 instructions_img = pygame.image.load('Instructions.png').convert_alpha()
+rules_img = pygame.image.load('rules.png').convert_alpha()
+return_begin_img = pygame.image.load('Return_begin.png').convert_alpha()
+return_game_img = pygame.image.load('Return_game.png').convert_alpha()
+exit_pause_img = pygame.image.load('Exit_pause.png').convert_alpha()
 stack_img = pygame.image.load('Set_stack.png').convert_alpha()
 submit_img = pygame.image.load('submit_button.png').convert_alpha()
 card1 = card.Card.random(stack, stack_name)
@@ -85,6 +90,10 @@ card14 = []
 card15 = []
 
 #create button
+return_begin_button = button.Button(800, 320, return_begin_img, 0.2)
+return_game_button = button.Button(800, 190, return_game_img, 0.2)
+exit_pause_button = button.Button(800, 450, exit_pause_img, 0.2)
+rules_button = button.Button(35, 95, rules_img, 1)
 exit_button = button.Button(1, 1, exit_img, 0.04)
 easy_button = button.Button(320, 170, easy_img, 0.2)
 medium_button = button.Button(320, 300, medium_img, 0.2)
@@ -140,7 +149,6 @@ your_score = font.render('Your score: ', True, WHITE)
 computer_score = font.render('computer score: ', True, WHITE)
 you_have_to_choose_3_cards = Small_font.render('You have to choose 3 cards!', True, WHITE)
 Main_menu = font.render('Choose your difficulty', True, WHITE)
-Instructions = font.render('instructions here, press space to go back to the game', True, WHITE)
 too_slow = font.render('Your turn has passed, the computer gets to try', True, WHITE)
 Player = font.render('Player:', True, WHITE)
 Computer = font.render('Computer:', True, WHITE)
@@ -169,8 +177,8 @@ exit_rect = pygame.Rect(12, 15, 58, 50)
 
 # Main loop
 time_while_paused = 0
-unpaused_lst = [0]
-paused_lst = [0]
+unpaused_time = 0
+paused_time = 0
 selected = []
 selected_computer = []
 on_table = [card1, card2, card3, card4, 
@@ -212,7 +220,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and not help_not_needed:
                 help_not_needed = True
-                unpaused_lst.append(pygame.time.get_ticks())
+                unpaused_time = pygame.time.get_ticks()
             if win_screen or loss_screen or draw_screen:
                 win_screen, loss_screen, draw_screen = False, False, False
                 begin_screen = True
@@ -343,9 +351,21 @@ while running:
     
     #if help show instructions
     if not help_not_needed:
-        screen.blit(Instructions, (100, 75))
+        rules_button.draw(screen)
+        if return_game_button.draw(screen):
+            help_not_needed = True
+            unpaused_time = pygame.time.get_ticks()
+        if return_begin_button.draw(screen):
+            begin_screen = True
+            help_not_needed = True
+            unpaused_time = 0
+        if exit_pause_button.draw(screen):
+            running = False
     else:
         if begin_screen:
+            paused_time = 0
+            unpaused_time = 0
+            time_while_paused = 0 
             pygame.draw.rect(screen, WHITE, exit_rect)
             screen.blit(Main_menu, (325, 100))
             #decide difficulty and start game
@@ -371,13 +391,14 @@ while running:
                 game_screen = True
             if instructions_button.draw(screen):
                 help_not_needed = False
+                paused_time = pygame.time.get_ticks()
             if exit_button.draw(screen):
                 running = False
         elif game_screen:
             current_time = pygame.time.get_ticks()
             if instructions_button.draw(screen):
                 help_not_needed = False
-                paused_lst.append(pygame.time.get_ticks())
+                paused_time = pygame.time.get_ticks()
                 
             #create rectangles for selecting
             if card1_selected:
@@ -412,12 +433,10 @@ while running:
                 pygame.draw.rect(screen, YELLOW, selected_rect15)
 
             #determine the time that passed while the game was paused
-            for i in paused_lst:
-                time_while_paused -= i
-                paused_lst.remove(i)
-            for j in unpaused_lst:
-                time_while_paused += j
-                unpaused_lst.remove(j)
+            time_while_paused -= paused_time
+            paused_time = 0
+            time_while_paused += unpaused_time
+            unpaused_time = 0
 
             #create cards on screen
             if new_card1:
@@ -635,8 +654,8 @@ while running:
             #create submit button on screen:
             if submit_button.draw(screen):
                 #reset the time that was paused, because this should only hold for one round
-                unpaused_lst = []
-                paused_lst = []
+                unpaused_time = 0
+                paused_time = 0
                 time_while_paused = 0
                 card1_selected = False
                 card2_selected = False
@@ -809,8 +828,8 @@ while running:
                     selected = []
             elif timer - current_time + start_time + time_while_paused < 0 and help_not_needed:
                 #reset the time that was paused, because this should only hold for one round
-                unpaused_lst = []
-                paused_lst = []
+                unpaused_time = 0
+                paused_time = 0
                 time_while_paused = 0
                 card1_selected = False
                 card2_selected = False
