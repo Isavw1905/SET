@@ -19,7 +19,7 @@ RED = (228, 8, 10)
 screen = pygame.display.set_mode((1100, 800))
 pygame.display.set_caption("SET game")
 
-#create font for text
+#Create font for text
 Big_font = pygame.font.Font(None, 250)
 font = pygame.font.Font(None, 55)
 Small_font = pygame.font.Font(None, 40)
@@ -42,7 +42,7 @@ exit_pause_img = pygame.image.load('Exit_pause.png').convert_alpha()
 stack_img = pygame.image.load('Set_stack.png').convert_alpha()
 submit_img = pygame.image.load('submit_button.png').convert_alpha()
 
-#create button
+#create buttons
 return_begin_button = button.Button(800, 320, return_begin_img, 0.2)
 return_game_button = button.Button(800, 190, return_game_img, 0.2)
 exit_pause_button = button.Button(800, 450, exit_pause_img, 0.2)
@@ -56,7 +56,7 @@ instructions_button = button.Button(1030, 10, instructions_img, 0.05)
 stack_button = button.Button(775, 115, stack_img, 0.2)
 submit_button = button.Button(740, 535, submit_img, 0.5)
 
-#create text and rect
+#create text and rectanglesB
 end_screen_rect = pygame.Rect(50, 50, 1000, 700)
 you_win = Big_font.render('You won!', True, GREEN)
 you_win_shade = Big_font.render('You won!', True, BLACK)
@@ -99,8 +99,10 @@ paused_time = 0
 reset_game = True
 running = True
 while running:
+    #The loop for if someone has already finished the game once and they want to play again.
     if reset_game:
         reset_game = False
+
         #create stack of cards in number form
         stack = []
         for i in range(1, 4):
@@ -109,7 +111,7 @@ while running:
                     for l in range(1, 4):
                         stack.append([i, j, k, l])
 
-        #create stach of cards in word form
+        #create stack of cards in word form
         dict_colour = {1:'green', 2:'purple', 3:'red'}
         dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
         dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
@@ -119,6 +121,7 @@ while running:
                 for k in range(1, 4):
                     for l in range(1, 4):
                         stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
+
         #create random cards and their corresponding image
         card1 = card.Card.random(stack, stack_name)
         card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
@@ -209,6 +212,7 @@ while running:
         #quit game
         if event.type == pygame.QUIT:
             running = False
+
         #reset timer and show cards
         elif event.type == Display_new_cards:
             pygame.time.set_timer(Display_new_cards, 0)
@@ -227,7 +231,7 @@ while running:
             new_card13 = True
             new_card14 = True
             new_card15 = True
-        #if space exit instructions
+
         if event.type == pygame.KEYDOWN:
             #you can pause and unpause the game by clicking the space button.
             if event.key == pygame.K_SPACE:
@@ -237,6 +241,7 @@ while running:
                 elif help_not_needed:
                     help_not_needed = False
                     paused_time = pygame.time.get_ticks()
+            #after game has ended, you can press any key to go back to the start screen
             if win_screen or loss_screen or draw_screen:
                 win_screen, loss_screen, draw_screen = False, False, False
                 reset_game = True
@@ -244,6 +249,7 @@ while running:
                 
     #Fill the screen with a color
     screen.fill(PURPLE)
+    #show the win, loss or draw screen after game, depending on the outcome.
     if win_screen:
         game_screen = False
         pygame.draw.rect(screen, LIGHT_PURPLE, end_screen_rect)
@@ -275,7 +281,7 @@ while running:
         screen.blit(computer_score, (300, 475))
         screen.blit(score_Computer, (630, 475))
     
-    #if help show instructions
+    #if help button clicked show instructions and pause menu.
     if not help_not_needed:
         rules_button.draw(screen)
         if return_game_button.draw(screen):
@@ -289,6 +295,7 @@ while running:
         if exit_pause_button.draw(screen):
             running = False
     else:
+        #start menu
         if begin_screen:
             paused_time = 0
             unpaused_time = 0
@@ -317,13 +324,19 @@ while running:
                 start_time = pygame.time.get_ticks()
                 begin_screen = False
                 game_screen = True
+
+            #both corner buttons
             if instructions_button.draw(screen):
                 help_not_needed = False
-                paused_time = pygame.time.get_ticks()
             if exit_button.draw(screen):
                 running = False
+
+        #Playing the game.
         elif game_screen:
+            #check the time at all moments during the game
             current_time = pygame.time.get_ticks()
+
+            #make it possible to pause the game and check at what time the game got paused.
             if instructions_button.draw(screen):
                 help_not_needed = False
                 paused_time = pygame.time.get_ticks()
@@ -366,7 +379,7 @@ while running:
             time_while_paused += unpaused_time
             unpaused_time = 0
 
-            #create cards on screen
+            #create cards on screen and make them selectable.
             if new_card1:
                 if card1 in on_table:
                     if card1_button.draw(screen):
@@ -563,7 +576,7 @@ while running:
                             card15_selected = False
                             selected.remove(card15)
                 
-            #create score
+            #create scoreboard
             pygame.draw.rect(screen, LIGHT_PURPLE, score_board)
             screen.blit(Player, (760, 405))
             screen.blit(Computer, (760, 355))
@@ -603,7 +616,9 @@ while running:
                 card14_selected = False
                 card15_selected = False
                 show_you_have_to_choose_3_cards = False
+                #check if right amount of cards got selected
                 if len(selected) == 3:
+                    #check if the selected cards are a real SET
                     if card.Card.check_set(selected):
                         pygame.time.set_timer(Display_new_cards, 1000)
                         
@@ -614,6 +629,7 @@ while running:
                         #remove cards from table
                         for i in selected:
                             on_table.remove(i)
+                        #make sure we only replace cards if there are less than 12 left on the table.
                         if len(on_table) < 12:
                             if card1 in selected and len(stack) != 0:
                                 make_card1 = True
@@ -651,13 +667,14 @@ while running:
                         start_time = pygame.time.get_ticks()
                     else:
                         #Check if there exists a SET
-                        if card.Card.pick_set(on_table) == False and len(stack) == 0:
+                        if card.Card.pick_set(on_table) == False and len(stack) == 0: #end the game if no sets and nothing left on the stack
                             if sc > sp:
                                 loss_screen = True
                             elif sp > sc:
                                 win_screen = True
                             else:
                                 draw_screen = True
+                        #add three cards if there is no set on the empty spots on the board.
                         elif card.Card.pick_set(on_table) == False:
                             if card1 not in on_table:
                                 if len(on_table) < 15:
@@ -764,10 +781,11 @@ while running:
                     show_you_have_to_choose_3_cards = True
                     #reset selected
                     selected = []
+
             #the computer needs to make a move
             elif timer - current_time + start_time + time_while_paused < 0 and help_not_needed:
                 
-                #reset the time that was paused, because this should only hold for one round
+                #reset the time that passed while paused, because this should only hold for one round
                 unpaused_time = 0
                 paused_time = 0
                 time_while_paused = 0
@@ -787,6 +805,8 @@ while running:
                 card14_selected = False
                 card15_selected = False
                 show_you_have_to_choose_3_cards = False
+
+                #end the game if no SET
                 if card.Card.pick_set(on_table) == False and len(stack) == 0:
                     if sc > sp:
                         loss_screen = True
@@ -794,6 +814,7 @@ while running:
                         win_screen = True
                     else:
                         draw_screen = True
+                #add cards to the table if there's no SET
                 elif card.Card.pick_set(on_table) == False:
                     if card1 not in on_table:
                         if len(on_table) < 15:
@@ -847,6 +868,7 @@ while running:
                     #reset selected
                     selected = []
                     start_time = pygame.time.get_ticks()
+                #The computer has found a SET
                 else:
                     #reset selected
                     selected = []
@@ -894,6 +916,7 @@ while running:
                     selected_computer = []
                     start_time = pygame.time.get_ticks()
             
+            #randomise new cards
             if make_card1 and card1 not in on_table:
                 new_card1 = False
                 make_card1 = False
