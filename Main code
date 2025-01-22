@@ -1,29 +1,9 @@
-
 import pygame
 import button
 import card
 
 # Initialize Pygame
 pygame.init()
-
-#create stack of cards in number form
-stack = []
-for i in range(1, 4):
-    for j in range(1, 4):
-        for k in range(1, 4):
-            for l in range(1, 4):
-                stack.append([i, j, k, l])
-
-#create stach of cards in word form
-dict_colour = {1:'green', 2:'purple', 3:'red'}
-dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
-dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
-stack_name = []
-for i in range(1, 4):
-    for j in range(1, 4):
-        for k in range(1, 4):
-            for l in range(1, 4):
-                stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
 
 #Make colors
 WHITE = (255, 255, 255)
@@ -61,33 +41,6 @@ return_game_img = pygame.image.load('Return_game.png').convert_alpha()
 exit_pause_img = pygame.image.load('Exit_pause.png').convert_alpha()
 stack_img = pygame.image.load('Set_stack.png').convert_alpha()
 submit_img = pygame.image.load('submit_button.png').convert_alpha()
-card1 = card.Card.random(stack, stack_name)
-card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
-card2 = card.Card.random(stack, stack_name)
-card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
-card3 = card.Card.random(stack, stack_name)
-card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
-card4 = card.Card.random(stack, stack_name)
-card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
-card5 = card.Card.random(stack, stack_name)
-card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
-card6 = card.Card.random(stack, stack_name)
-card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
-card7 = card.Card.random(stack, stack_name)
-card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
-card8 = card.Card.random(stack, stack_name)
-card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
-card9 = card.Card.random(stack, stack_name)
-card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
-card10 = card.Card.random(stack, stack_name)
-card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
-card11 = card.Card.random(stack, stack_name)
-card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
-card12 = card.Card.random(stack, stack_name)
-card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
-card13 = []
-card14 = []
-card15 = []
 
 #create button
 return_begin_button = button.Button(800, 320, return_begin_img, 0.2)
@@ -102,39 +55,6 @@ impossible_button = button.Button(320, 560, impossible_img, 0.2)
 instructions_button = button.Button(1030, 10, instructions_img, 0.05)
 stack_button = button.Button(775, 115, stack_img, 0.2)
 submit_button = button.Button(740, 535, submit_img, 0.5)
-card1_button = button.Button(35, 65, card1_img, 1)
-card2_button = button.Button(35, 300, card2_img, 1)
-card3_button = button.Button(35, 535, card3_img, 1)
-card4_button = button.Button(170, 65, card4_img, 1)
-card5_button = button.Button(170, 300, card5_img, 1)
-card6_button = button.Button(170, 535, card6_img, 1)
-card7_button = button.Button(305, 65, card7_img, 1)
-card8_button = button.Button(305, 300, card8_img, 1)
-card9_button = button.Button(305, 535, card9_img, 1)
-card10_button = button.Button(440, 65, card10_img, 1)
-card11_button = button.Button(440, 300, card11_img, 1)
-card12_button = button.Button(440, 535, card12_img, 1)
-card13_button = []
-card14_button = []
-card15_button = []
-
-#determine card selected 
-card1_selected, new_card1, make_card1 = False, False, False
-card2_selected, new_card2, make_card2 = False, False, False
-card3_selected, new_card3, make_card3 = False, False, False
-card4_selected, new_card4, make_card4 = False, False, False
-card5_selected, new_card5, make_card5 = False, False, False
-card6_selected, new_card6, make_card6 = False, False, False
-card7_selected, new_card7, make_card7 = False, False, False
-card8_selected, new_card8, make_card8 = False, False, False
-card9_selected, new_card9, make_card9 = False, False, False
-card10_selected, new_card10, make_card10 = False, False, False
-card11_selected, new_card11, make_card11 = False, False, False
-card12_selected, new_card12, make_card12 = False, False, False
-card13_selected, new_card13, make_card13 = False, False, False
-card14_selected, new_card14, make_card14 = False, False, False
-card15_selected, new_card15, make_card15 = False, False, False
-show_you_have_to_choose_3_cards = False
 
 #create text and rect
 end_screen_rect = pygame.Rect(50, 50, 1000, 700)
@@ -152,12 +72,7 @@ Main_menu = font.render('Choose your difficulty', True, WHITE)
 too_slow = font.render('Your turn has passed, the computer gets to try', True, WHITE)
 Player = font.render('Player:', True, WHITE)
 Computer = font.render('Computer:', True, WHITE)
-sp = 0
-score_Player = font.render(str(sp), True, WHITE)
-sc = 0
-score_Computer = font.render(str(sc), True, WHITE)
 score_board = pygame.Rect(710, 300, 355, 200)
-stack_count = font.render(str(len(stack)), True, WHITE)
 selected_rect1 = pygame.Rect(25, 55, 120, 220)
 selected_rect2 = pygame.Rect(25, 290, 120, 220)
 selected_rect3 = pygame.Rect(25, 525, 120, 220)
@@ -179,18 +94,114 @@ exit_rect = pygame.Rect(12, 15, 58, 50)
 time_while_paused = 0
 unpaused_time = 0
 paused_time = 0
-selected = []
-selected_computer = []
-on_table = [card1, card2, card3, card4, 
-            card5, card6, card7, card8, 
-            card9, card10, card11, card12]
 #intialising settings
-win_screen, loss_screen, draw_screen = False, False, False
-begin_screen = True
-help_not_needed = True
-game_screen = False
+reset_game = True
 running = True
 while running:
+    if reset_game:
+        reset_game = False
+        #create stack of cards in number form
+        stack = []
+        for i in range(1, 4):
+            for j in range(1, 4):
+                for k in range(1, 4):
+                    for l in range(1, 4):
+                        stack.append([i, j, k, l])
+
+        #create stach of cards in word form
+        dict_colour = {1:'green', 2:'purple', 3:'red'}
+        dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
+        dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
+        stack_name = []
+        for i in range(1, 4):
+            for j in range(1, 4):
+                for k in range(1, 4):
+                    for l in range(1, 4):
+                        stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
+        #create random cards and their corresponding image
+        card1 = card.Card.random(stack, stack_name)
+        card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
+        card2 = card.Card.random(stack, stack_name)
+        card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
+        card3 = card.Card.random(stack, stack_name)
+        card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
+        card4 = card.Card.random(stack, stack_name)
+        card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
+        card5 = card.Card.random(stack, stack_name)
+        card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
+        card6 = card.Card.random(stack, stack_name)
+        card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
+        card7 = card.Card.random(stack, stack_name)
+        card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
+        card8 = card.Card.random(stack, stack_name)
+        card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
+        card9 = card.Card.random(stack, stack_name)
+        card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
+        card10 = card.Card.random(stack, stack_name)
+        card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
+        card11 = card.Card.random(stack, stack_name)
+        card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
+        card12 = card.Card.random(stack, stack_name)
+        card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
+        card13 = []
+        card14 = []
+        card15 = []
+        
+        #create buttons for cards
+        card1_button = button.Button(35, 65, card1_img, 1)
+        card2_button = button.Button(35, 300, card2_img, 1)
+        card3_button = button.Button(35, 535, card3_img, 1)
+        card4_button = button.Button(170, 65, card4_img, 1)
+        card5_button = button.Button(170, 300, card5_img, 1)
+        card6_button = button.Button(170, 535, card6_img, 1)
+        card7_button = button.Button(305, 65, card7_img, 1)
+        card8_button = button.Button(305, 300, card8_img, 1)
+        card9_button = button.Button(305, 535, card9_img, 1)
+        card10_button = button.Button(440, 65, card10_img, 1)
+        card11_button = button.Button(440, 300, card11_img, 1)
+        card12_button = button.Button(440, 535, card12_img, 1)
+        card13_button = []
+        card14_button = []
+        card15_button = []
+        
+        #initialize score and stack count
+        stack_count = font.render(str(len(stack)), True, WHITE)
+        pygame.time.set_timer(Display_new_cards, 1000)
+        sp = 0
+        score_Player = font.render(str(sp), True, WHITE)
+        sc = 0
+        score_Computer = font.render(str(sc), True, WHITE)
+        
+        #set all card variables to False
+        card1_selected, new_card1, make_card1 = False, False, False
+        card2_selected, new_card2, make_card2 = False, False, False
+        card3_selected, new_card3, make_card3 = False, False, False
+        card4_selected, new_card4, make_card4 = False, False, False
+        card5_selected, new_card5, make_card5 = False, False, False
+        card6_selected, new_card6, make_card6 = False, False, False
+        card7_selected, new_card7, make_card7 = False, False, False
+        card8_selected, new_card8, make_card8 = False, False, False
+        card9_selected, new_card9, make_card9 = False, False, False
+        card10_selected, new_card10, make_card10 = False, False, False
+        card11_selected, new_card11, make_card11 = False, False, False
+        card12_selected, new_card12, make_card12 = False, False, False
+        card13_selected, new_card13, make_card13 = False, False, False
+        card14_selected, new_card14, make_card14 = False, False, False
+        card15_selected, new_card15, make_card15 = False, False, False
+        show_you_have_to_choose_3_cards = False
+        
+        #create important lists
+        selected = []
+        selected_computer = []
+        on_table = [card1, card2, card3, card4, 
+                    card5, card6, card7, card8, 
+                    card9, card10, card11, card12]
+        
+        #initialize game state
+        win_screen, loss_screen, draw_screen = False, False, False
+        begin_screen = True
+        help_not_needed = True
+        game_screen = False
     
     #normale game-loop
     for event in pygame.event.get():
@@ -199,7 +210,6 @@ while running:
             running = False
         #reset timer and show cards
         elif event.type == Display_new_cards:
-            print('nieuwe kaarten')
             pygame.time.set_timer(Display_new_cards, 0)
             new_card1 = True
             new_card2 = True 
@@ -228,98 +238,12 @@ while running:
                     paused_time = pygame.time.get_ticks()
             if win_screen or loss_screen or draw_screen:
                 win_screen, loss_screen, draw_screen = False, False, False
+                reset_game = True
                 begin_screen = True
-                #create stack of cards in number form
-                stack = []
-                for i in range(1, 4):
-                    for j in range(1, 4):
-                        for k in range(1, 4):
-                            for l in range(1, 4):
-                                stack.append([i, j, k, l])
-
-                #create stach of cards in word form
-                dict_colour = {1:'green', 2:'purple', 3:'red'}
-                dict_symbol = {1:'diamond', 2:'oval', 3:'squiggle'}
-                dict_shading = {1:'empty', 2:'filled', 3:'shaded'}
-                stack_name = []
-                for i in range(1, 4):
-                    for j in range(1, 4):
-                        for k in range(1, 4):
-                            for l in range(1, 4):
-                                stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
-                card1 = card.Card.random(stack, stack_name)
-                card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
-                card2 = card.Card.random(stack, stack_name)
-                card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
-                card3 = card.Card.random(stack, stack_name)
-                card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
-                card4 = card.Card.random(stack, stack_name)
-                card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
-                card5 = card.Card.random(stack, stack_name)
-                card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
-                card6 = card.Card.random(stack, stack_name)
-                card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
-                card7 = card.Card.random(stack, stack_name)
-                card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
-                card8 = card.Card.random(stack, stack_name)
-                card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
-                card9 = card.Card.random(stack, stack_name)
-                card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
-                card10 = card.Card.random(stack, stack_name)
-                card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
-                card11 = card.Card.random(stack, stack_name)
-                card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
-                card12 = card.Card.random(stack, stack_name)
-                card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
-                card13 = []
-                card14 = []
-                card15 = []
-                card1_button = button.Button(35, 65, card1_img, 1)
-                card2_button = button.Button(35, 300, card2_img, 1)
-                card3_button = button.Button(35, 535, card3_img, 1)
-                card4_button = button.Button(170, 65, card4_img, 1)
-                card5_button = button.Button(170, 300, card5_img, 1)
-                card6_button = button.Button(170, 535, card6_img, 1)
-                card7_button = button.Button(305, 65, card7_img, 1)
-                card8_button = button.Button(305, 300, card8_img, 1)
-                card9_button = button.Button(305, 535, card9_img, 1)
-                card10_button = button.Button(440, 65, card10_img, 1)
-                card11_button = button.Button(440, 300, card11_img, 1)
-                card12_button = button.Button(440, 535, card12_img, 1)
-                card13_button = []
-                card14_button = []
-                card15_button = []
-                pygame.time.set_timer(Display_new_cards, 1000)
-                sp = 0
-                score_Player = font.render(str(sp), True, WHITE)
-                sc = 0
-                score_Computer = font.render(str(sc), True, WHITE)
-                card1_selected, new_card1, make_card1 = False, False, False
-                card2_selected, new_card2, make_card2 = False, False, False
-                card3_selected, new_card3, make_card3 = False, False, False
-                card4_selected, new_card4, make_card4 = False, False, False
-                card5_selected, new_card5, make_card5 = False, False, False
-                card6_selected, new_card6, make_card6 = False, False, False
-                card7_selected, new_card7, make_card7 = False, False, False
-                card8_selected, new_card8, make_card8 = False, False, False
-                card9_selected, new_card9, make_card9 = False, False, False
-                card10_selected, new_card10, make_card10 = False, False, False
-                card11_selected, new_card11, make_card11 = False, False, False
-                card12_selected, new_card12, make_card12 = False, False, False
-                card13_selected, new_card13, make_card13 = False, False, False
-                card14_selected, new_card14, make_card14 = False, False, False
-                card15_selected, new_card15, make_card15 = False, False, False
-                show_you_have_to_choose_3_cards = False
-                selected = []
-                selected_computer = []
-                on_table = [card1, card2, card3, card4, 
-                            card5, card6, card7, card8, 
-                            card9, card10, card11, card12]
+                
     # Fill the screen with a color
     screen.fill(PURPLE)
     if win_screen:
-        help_not_needed = True
-        begin_screen = False
         game_screen = False
         pygame.draw.rect(screen, LIGHT_PURPLE, end_screen_rect)
         screen.blit(you_win_shade, (180, 160))
@@ -330,8 +254,6 @@ while running:
         screen.blit(computer_score, (300, 475))
         screen.blit(score_Computer, (630, 475))
     elif loss_screen:
-        help_not_needed = True
-        begin_screen = False
         game_screen = False
         pygame.draw.rect(screen, LIGHT_PURPLE, end_screen_rect)
         screen.blit(you_lose_shade, (180, 160))
@@ -342,8 +264,6 @@ while running:
         screen.blit(computer_score, (300, 475))
         screen.blit(score_Computer, (630, 475))
     elif draw_screen:
-        help_not_needed = True
-        begin_screen = False
         game_screen = False
         pygame.draw.rect(screen, LIGHT_PURPLE, end_screen_rect)
         screen.blit(it_is_a_draw_shade, (110, 160))
@@ -361,6 +281,7 @@ while running:
             help_not_needed = True
             unpaused_time = pygame.time.get_ticks()
         if return_begin_button.draw(screen):
+            reset_game = True
             begin_screen = True
             help_not_needed = True
             unpaused_time = 0
@@ -390,7 +311,7 @@ while running:
                 begin_screen = False
                 game_screen = True
             elif impossible_button.draw(screen):
-                timer = 1200
+                timer = 7000
                 start_time = pygame.time.get_ticks()
                 begin_screen = False
                 game_screen = True
@@ -828,7 +749,6 @@ while running:
                             start_time = pygame.time.get_ticks()
                 else:
                     show_you_have_to_choose_3_cards = True
-                    print(card.Card.pick_set(on_table))
                     #reset selected
                     selected = []
             elif timer - current_time + start_time + time_while_paused < 0 and help_not_needed:
