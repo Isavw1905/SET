@@ -73,21 +73,18 @@ too_slow = font.render('Your turn has passed, the computer gets to try', True, W
 Player = font.render('Player:', True, WHITE)
 Computer = font.render('Computer:', True, WHITE)
 score_board = pygame.Rect(710, 300, 355, 200)
-selected_rect1 = pygame.Rect(25, 55, 120, 220)
-selected_rect2 = pygame.Rect(25, 290, 120, 220)
-selected_rect3 = pygame.Rect(25, 525, 120, 220)
-selected_rect4 = pygame.Rect(160, 55, 120, 220)
-selected_rect5 = pygame.Rect(160, 290, 120, 220)
-selected_rect6 = pygame.Rect(160, 525, 120, 220)
-selected_rect7 = pygame.Rect(295, 55, 120, 220)
-selected_rect8 = pygame.Rect(295, 290, 120, 220)
-selected_rect9 = pygame.Rect(295, 525, 120, 220)
-selected_rect10 = pygame.Rect(430, 55, 120, 220)
-selected_rect11 = pygame.Rect(430, 290, 120, 220)
-selected_rect12 = pygame.Rect(430, 525, 120, 220)
-selected_rect13 = pygame.Rect(565, 55, 120, 220)
-selected_rect14 = pygame.Rect(565, 290, 120, 220)
-selected_rect15 = pygame.Rect(565, 525, 120, 220)
+selected_rect1 = pygame.Rect(92, 55, 120, 220)
+selected_rect2 = pygame.Rect(92, 290, 120, 220)
+selected_rect3 = pygame.Rect(92, 525, 120, 220)
+selected_rect4 = pygame.Rect(227, 55, 120, 220)
+selected_rect5 = pygame.Rect(227, 290, 120, 220)
+selected_rect6 = pygame.Rect(227, 525, 120, 220)
+selected_rect7 = pygame.Rect(362, 55, 120, 220)
+selected_rect8 = pygame.Rect(362, 290, 120, 220)
+selected_rect9 = pygame.Rect(362, 525, 120, 220)
+selected_rect10 = pygame.Rect(497, 55, 120, 220)
+selected_rect11 = pygame.Rect(497, 290, 120, 220)
+selected_rect12 = pygame.Rect(497, 525, 120, 220)
 exit_rect = pygame.Rect(12, 15, 58, 50)
 
 #Main loop
@@ -149,26 +146,20 @@ while running:
         card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
         card12 = card.Card.random(stack, stack_name)
         card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
-        card13 = []
-        card14 = []
-        card15 = []
         
         #create buttons for cards
-        card1_button = button.Button(35, 65, card1_img, 1)
-        card2_button = button.Button(35, 300, card2_img, 1)
-        card3_button = button.Button(35, 535, card3_img, 1)
-        card4_button = button.Button(170, 65, card4_img, 1)
-        card5_button = button.Button(170, 300, card5_img, 1)
-        card6_button = button.Button(170, 535, card6_img, 1)
-        card7_button = button.Button(305, 65, card7_img, 1)
-        card8_button = button.Button(305, 300, card8_img, 1)
-        card9_button = button.Button(305, 535, card9_img, 1)
-        card10_button = button.Button(440, 65, card10_img, 1)
-        card11_button = button.Button(440, 300, card11_img, 1)
-        card12_button = button.Button(440, 535, card12_img, 1)
-        card13_button = []
-        card14_button = []
-        card15_button = []
+        card1_button = button.Button(102, 65, card1_img, 1)
+        card2_button = button.Button(102, 300, card2_img, 1)
+        card3_button = button.Button(102, 535, card3_img, 1)
+        card4_button = button.Button(237, 65, card4_img, 1)
+        card5_button = button.Button(237, 300, card5_img, 1)
+        card6_button = button.Button(237, 535, card6_img, 1)
+        card7_button = button.Button(372, 65, card7_img, 1)
+        card8_button = button.Button(372, 300, card8_img, 1)
+        card9_button = button.Button(372, 535, card9_img, 1)
+        card10_button = button.Button(507, 65, card10_img, 1)
+        card11_button = button.Button(507, 300, card11_img, 1)
+        card12_button = button.Button(507, 535, card12_img, 1)
         
         #initialize score and stack count
         stack_count = font.render(str(len(stack)), True, WHITE)
@@ -191,9 +182,6 @@ while running:
         card10_selected, new_card10, make_card10 = False, False, False
         card11_selected, new_card11, make_card11 = False, False, False
         card12_selected, new_card12, make_card12 = False, False, False
-        card13_selected, new_card13, make_card13 = False, False, False
-        card14_selected, new_card14, make_card14 = False, False, False
-        card15_selected, new_card15, make_card15 = False, False, False
         show_you_have_to_choose_3_cards = False
         
         time_left_int = 0
@@ -232,9 +220,6 @@ while running:
             new_card10 = True
             new_card11 = True
             new_card12 = True
-            new_card13 = True
-            new_card14 = True
-            new_card15 = True
 
         if event.type == Display_chosen_cards:
             pygame.time.set_timer(Display_chosen_cards, 0)
@@ -271,12 +256,7 @@ while running:
                     make_card11 = True
                 if card12 in selected_computer and len(stack) != 0:
                     make_card12 = True
-                if card13 in selected_computer and len(stack) != 0:
-                    make_card13 = True
-                if card14 in selected_computer and len(stack) != 0:
-                    make_card14 = True
-                if card15 in selected_computer and len(stack) != 0:
-                    make_card15 = True
+                    
             select_cards = True
             selected_computer = []
             #set timer untill new cards apear
@@ -395,7 +375,9 @@ while running:
             if instructions_button.draw(screen) and not time_paused:
                 help_not_needed = False
                 paused_time = pygame.time.get_ticks()
-            
+            pygame.draw.rect(screen, WHITE, exit_rect)
+            if exit_button.draw(screen):
+                running = False
             #create rectangles for computer select
             if card1 in selected_computer:
                 pygame.draw.rect(screen, LIGHT_BLUE, selected_rect1)
@@ -421,12 +403,6 @@ while running:
                 pygame.draw.rect(screen, LIGHT_BLUE, selected_rect11)
             if card12 in selected_computer:
                 pygame.draw.rect(screen, LIGHT_BLUE, selected_rect12)
-            if card13 in selected_computer:
-                pygame.draw.rect(screen, LIGHT_BLUE, selected_rect13)
-            if card14 in selected_computer:
-                pygame.draw.rect(screen, LIGHT_BLUE, selected_rect14)
-            if card15 in selected_computer:
-                pygame.draw.rect(screen, LIGHT_BLUE, selected_rect15)
                 
             #create rectangles for selecting
             if card1_selected:
@@ -453,12 +429,6 @@ while running:
                 pygame.draw.rect(screen, YELLOW, selected_rect11)
             if card12_selected:
                 pygame.draw.rect(screen, YELLOW, selected_rect12)
-            if card13_selected:
-                pygame.draw.rect(screen, YELLOW, selected_rect13)
-            if card14_selected:
-                pygame.draw.rect(screen, YELLOW, selected_rect14)
-            if card15_selected:
-                pygame.draw.rect(screen, YELLOW, selected_rect15)
 
             #determine the time that passed while the game was paused
             time_while_paused -= paused_time
@@ -623,46 +593,7 @@ while running:
                         elif card12_selected:
                             card12_selected = False
                             selected.remove(card12)
-            if new_card13:
-                if card13 in on_table:
-                    if card13_button.draw(screen):
-                        if len(selected) < 3 and select_cards:
-                            if not card13_selected:
-                                card13_selected = True
-                                selected.append(card13)
-                            elif card13_selected:
-                                card13_selected = False
-                                selected.remove(card13)
-                        elif card13_selected:
-                            card13_selected = False
-                            selected.remove(card13)
-            if new_card14:
-                if card14 in on_table:
-                    if card14_button.draw(screen):
-                        if len(selected) < 3 and select_cards:
-                            if not card14_selected:
-                                card14_selected = True
-                                selected.append(card14)
-                            elif card14_selected:
-                                card14_selected = False
-                                selected.remove(card14)
-                        elif card14_selected:
-                            card14_selected = False
-                            selected.remove(card14)
-            if new_card15:
-                if card15 in on_table:
-                    if card15_button.draw(screen):
-                        if len(selected) < 3 and select_cards:
-                            if not card15_selected:
-                                card15_selected = True
-                                selected.append(card15)
-                            elif card15_selected:
-                                card15_selected = False
-                                selected.remove(card15)
-                        elif card15_selected:
-                            card15_selected = False
-                            selected.remove(card15)
-                
+                            
             #create scoreboard
             pygame.draw.rect(screen, LIGHT_PURPLE, score_board)
             screen.blit(Player, (760, 405))
@@ -677,7 +608,7 @@ while running:
                 time_left = font.render('Time left: ' + str(time_left_int), True, WHITE)
             else:
                 time_left = font.render('Time left: ' + str(int((timer - current_time + start_time + time_while_paused)/1000)), True, WHITE)
-            screen.blit(time_left, (35, 15))
+            screen.blit(time_left, (102, 15))
             
             #create stack
             stack_button.draw(screen)
@@ -697,9 +628,6 @@ while running:
                 card10_selected = False
                 card11_selected = False
                 card12_selected = False
-                card13_selected = False
-                card14_selected = False
-                card15_selected = False
                 show_you_have_to_choose_3_cards = False
                 if len(selected) == 3:
                     #Check if the selected cards are a real SET
@@ -742,12 +670,6 @@ while running:
                                 make_card11 = True
                             if card12 in selected and len(stack) != 0:
                                 make_card12 = True
-                            if card13 in selected and len(stack) != 0:
-                                make_card13 = True
-                            if card14 in selected and len(stack) != 0:
-                                make_card14 = True
-                            if card15 in selected and len(stack) != 0:
-                                make_card15 = True
                                 
                         #reset selected
                         selected = []
@@ -773,14 +695,11 @@ while running:
                 card10_selected = False
                 card11_selected = False
                 card12_selected = False
-                card13_selected = False
-                card14_selected = False
-                card15_selected = False
                 show_you_have_to_choose_3_cards = False
             #if it is the computer his turn
             if computer_turn:
                 computer_turn = False
-                if (card.Card.pick_set(on_table) == False and len(stack) == 0) or (card.Card.pick_set(on_table) == False and len(on_table) == 15) :
+                if card.Card.pick_set(on_table) == False and len(stack) == 0:
                     if sc > sp:
                         loss_screen = True
                     elif sp > sc:
@@ -788,52 +707,14 @@ while running:
                     else:
                         draw_screen = True
                 elif card.Card.pick_set(on_table) == False:
-                    if card1 not in on_table:
-                        if len(on_table) < 15:
-                            make_card1 = True
-                    if card2 not in on_table:
-                        if len(on_table) < 15:
-                            make_card2 = True
-                    if card3 not in on_table:
-                        if len(on_table) < 15:
-                            make_card3 = True
-                    if card4 not in on_table:
-                        if len(on_table) < 15:
-                            make_card4 = True
-                    if card5 not in on_table:
-                        if len(on_table) < 15:
-                            make_card5 = True
-                    if card6 not in on_table:
-                        if len(on_table) < 15:
-                            make_card6 = True
-                    if card7 not in on_table:
-                        if len(on_table) < 15:
-                            make_card7 = True
-                    if card8 not in on_table:
-                        if len(on_table) < 15:
-                            make_card8 = True
-                    if card9 not in on_table:
-                        if len(on_table) < 15:
-                            make_card9 = True
-                    if card10 not in on_table:
-                        if len(on_table) < 15:
-                            make_card10 = True
-                    if card11 not in on_table:
-                        if len(on_table) < 15:
-                            make_card11 = True
-                    if card12 not in on_table:
-                        if len(on_table) < 15:
-                            make_card12 = True
-                    if card13 not in on_table:
-                        if len(on_table) < 15:
-                            make_card13 = True
-                    if card14 not in on_table:
-                        if len(on_table) < 15:
-                            make_card14 = True
-                    if card15 not in on_table:
-                        if len(on_table) < 15:
-                            make_card15 = True
-                            
+                    #remove 3 cards and make new ones
+                    on_table.remove(card10)
+                    make_card10 = True
+                    on_table.remove(card11)
+                    make_card11 = True
+                    on_table.remove(card12)
+                    make_card12 = True
+                    
                     #reset the time that was paused, because this should only hold for one round
                     unpaused_time = 0
                     paused_time = 0
@@ -946,27 +827,6 @@ while running:
                 card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
                 card12_button = button.Button(440, 535, card12_img, 1)
                 on_table.append(card12)
-            if make_card13 and card13 not in on_table:
-                new_card13 = False
-                make_card13 = False
-                card13 = card.Card.random(stack, stack_name)
-                card13_img = pygame.image.load('kaarten/' + card13[1] + '.gif').convert_alpha()
-                card13_button = button.Button(575, 65, card13_img, 1)
-                on_table.append(card13)
-            if make_card14 and card14 not in on_table:
-                new_card14 = False
-                make_card14 = False
-                card14 = card.Card.random(stack, stack_name)
-                card14_img = pygame.image.load('kaarten/' + card14[1] + '.gif').convert_alpha()
-                card14_button = button.Button(575, 300, card14_img, 1)
-                on_table.append(card14)
-            if make_card15 and card15 not in on_table:
-                new_card15 = False
-                make_card15 = False
-                card15 = card.Card.random(stack, stack_name)
-                card15_img = pygame.image.load('kaarten/' + card15[1] + '.gif').convert_alpha()
-                card15_button = button.Button(575, 535, card15_img, 1)
-                on_table.append(card15)
             
             #update stack_count
             stack_count = font.render('Cards left: ' + str(len(stack)), True, WHITE)
