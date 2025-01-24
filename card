@@ -7,8 +7,9 @@ class Card:
         self.number = number #number on card (1, 2, 3)
         
     def __str__(self):
+        #make string
         return f"{self.colour}{self.symbol}{self.shading}{self.number}"
-    
+    #check if 3 cards make a set
     def check_set(nest_list):
         for i in range(0, 3):
             for j in range(0, 4):
@@ -16,6 +17,7 @@ class Card:
                     return False
                     break
         return True
+    #output 3 cards that make a set from 12 cards
     def pick_set(open_cards):
         n = len(open_cards)
         for i in range(0, n-2):
@@ -25,6 +27,7 @@ class Card:
                         return [open_cards[i], open_cards[j], open_cards[k]]
                         break
         return False
+    #pick random card and remove from necessary lists
     def random(nest_list_number, nest_list_word):
         n = len(nest_list_word)-1
         index = random.randint(0, n)
