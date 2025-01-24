@@ -28,7 +28,7 @@ Small_font = pygame.font.Font(None, 40)
 Display_new_cards = pygame.USEREVENT + 1
 Display_chosen_cards = pygame.USEREVENT + 2
 
-#load images and make cards
+#load images
 exit_img = pygame.image.load('Exit_button.png').convert_alpha()
 easy_img = pygame.image.load('Easy_button.png').convert_alpha()
 medium_img = pygame.image.load('Medium_button.png').convert_alpha()
@@ -87,7 +87,7 @@ selected_rect11 = pygame.Rect(497, 290, 120, 220)
 selected_rect12 = pygame.Rect(497, 525, 120, 220)
 exit_rect = pygame.Rect(12, 15, 58, 50)
 
-#Main loop
+#Create necessary time variables
 time_left_int = 0
 time_while_paused = 0
 unpaused_time = 0
@@ -99,8 +99,9 @@ time_paused = False
 select_cards = True
 reset_game = True
 running = True
+#start game-loop
 while running:
-    #replay the game.
+    #reset the game.
     if reset_game:
         reset_game = False
         #create stack of cards in number form
@@ -121,6 +122,7 @@ while running:
                 for k in range(1, 4):
                     for l in range(1, 4):
                         stack_name.append(dict_colour[i] + dict_symbol[j] + dict_shading[k] + str(l))
+                        
         #create random cards and their corresponding image
         card1 = card.Card.random(stack, stack_name)
         card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
@@ -184,6 +186,7 @@ while running:
         card12_selected, new_card12, make_card12 = False, False, False
         show_you_have_to_choose_3_cards = False
         
+        #reset time left
         time_left_int = 0
         
         #create important lists
@@ -199,7 +202,7 @@ while running:
         help_not_needed = True
         game_screen = False
     
-    #normal game-loop
+    #event game-loop
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
@@ -220,9 +223,12 @@ while running:
             new_card10 = True
             new_card11 = True
             new_card12 = True
-
+        #if the timer runs out new cards should apear
         if event.type == Display_chosen_cards:
+            #reset timer
             pygame.time.set_timer(Display_chosen_cards, 0)
+            
+            #remove cards from table
             for i in card.Card.pick_set(on_table):
                 on_table.remove(i)
             
@@ -230,37 +236,37 @@ while running:
             sc += 1
             score_Computer = font.render(str(sc), True, WHITE)
             
-            #get rid of chosen cards and add new ones
-            if len(on_table) < 12:
-                if card1 in selected_computer and len(stack) != 0:
-                    make_card1 = True
-                if card2 in selected_computer and len(stack) != 0:
-                    make_card2 = True
-                if card3 in selected_computer and len(stack) != 0:
-                    make_card3 = True
-                if card4 in selected_computer and len(stack) != 0:
-                    make_card4 = True
-                if card5 in selected_computer and len(stack) != 0:
-                    make_card5 = True
-                if card6 in selected_computer and len(stack) != 0:
-                    make_card6 = True
-                if card7 in selected_computer and len(stack) != 0:
-                    make_card7 = True
-                if card8 in selected_computer and len(stack) != 0:
-                    make_card8 = True
-                if card9 in selected_computer and len(stack) != 0:
-                    make_card9 = True
-                if card10 in selected_computer and len(stack) != 0:
-                    make_card10 = True
-                if card11 in selected_computer and len(stack) != 0:
-                    make_card11 = True
-                if card12 in selected_computer and len(stack) != 0:
-                    make_card12 = True
-                    
+            #add new cards
+            if card1 in selected_computer and len(stack) != 0:
+                make_card1 = True
+            if card2 in selected_computer and len(stack) != 0:
+                make_card2 = True
+            if card3 in selected_computer and len(stack) != 0:
+                make_card3 = True
+            if card4 in selected_computer and len(stack) != 0:
+                make_card4 = True
+            if card5 in selected_computer and len(stack) != 0:
+                make_card5 = True
+            if card6 in selected_computer and len(stack) != 0:
+                make_card6 = True
+            if card7 in selected_computer and len(stack) != 0:
+                make_card7 = True
+            if card8 in selected_computer and len(stack) != 0:
+                make_card8 = True
+            if card9 in selected_computer and len(stack) != 0:
+                make_card9 = True
+            if card10 in selected_computer and len(stack) != 0:
+                make_card10 = True
+            if card11 in selected_computer and len(stack) != 0:
+                make_card11 = True
+            if card12 in selected_computer and len(stack) != 0:
+                make_card12 = True
+            #you can select cards again and reset selected_computer        
             select_cards = True
             selected_computer = []
             #set timer untill new cards apear
             pygame.time.set_timer(Display_new_cards, 900)
+            #in-game timer should play again
             time_paused = False
             #reset start time
             start_time = pygame.time.get_ticks()
@@ -371,7 +377,7 @@ while running:
         elif game_screen:
             #Check the time at all moments during the game.
             current_time = pygame.time.get_ticks()
-
+            #draw corner buttons
             if instructions_button.draw(screen) and not time_paused:
                 help_not_needed = False
                 paused_time = pygame.time.get_ticks()
@@ -600,6 +606,7 @@ while running:
             screen.blit(Computer, (760, 355))
             screen.blit(score_Player, (1000, 405))
             screen.blit(score_Computer, (1000, 355))
+            #if 3 cards ar enot selected show message
             if show_you_have_to_choose_3_cards:
                 screen.blit(you_have_to_choose_3_cards, (700, 570))
                 
@@ -616,6 +623,7 @@ while running:
             
             #create submit button on screen:
             if submit_button.draw(screen):
+                #deselect all cards and remove message
                 card1_selected = False
                 card2_selected = False
                 card3_selected = False
@@ -645,44 +653,47 @@ while running:
                         #remove cards from table
                         for i in selected:
                             on_table.remove(i)
-                        if len(on_table) < 12:
-                            if card1 in selected and len(stack) != 0:
-                                make_card1 = True
-                            if card2 in selected and len(stack) != 0:
-                                make_card2 = True
-                            if card3 in selected and len(stack) != 0:
-                                make_card3 = True
-                            if card4 in selected and len(stack) != 0:
-                                make_card4 = True
-                            if card5 in selected and len(stack) != 0:
-                                make_card5 = True
-                            if card6 in selected and len(stack) != 0:
-                                make_card6 = True
-                            if card7 in selected and len(stack) != 0:
-                                make_card7 = True
-                            if card8 in selected and len(stack) != 0:
-                                make_card8 = True
-                            if card9 in selected and len(stack) != 0:
-                                make_card9 = True
-                            if card10 in selected and len(stack) != 0:
-                                make_card10 = True
-                            if card11 in selected and len(stack) != 0:
-                                make_card11 = True
-                            if card12 in selected and len(stack) != 0:
-                                make_card12 = True
+                        #make new cards
+                        if card1 in selected and len(stack) != 0:
+                            make_card1 = True
+                        if card2 in selected and len(stack) != 0:
+                            make_card2 = True
+                        if card3 in selected and len(stack) != 0:
+                            make_card3 = True
+                        if card4 in selected and len(stack) != 0:
+                            make_card4 = True
+                        if card5 in selected and len(stack) != 0:
+                            make_card5 = True
+                        if card6 in selected and len(stack) != 0:
+                            make_card6 = True
+                        if card7 in selected and len(stack) != 0:
+                            make_card7 = True
+                        if card8 in selected and len(stack) != 0:
+                            make_card8 = True
+                        if card9 in selected and len(stack) != 0:
+                            make_card9 = True
+                        if card10 in selected and len(stack) != 0:
+                            make_card10 = True
+                        if card11 in selected and len(stack) != 0:
+                            make_card11 = True
+                        if card12 in selected and len(stack) != 0:
+                            make_card12 = True
                                 
                         #reset selected
                         selected = []
                         start_time = pygame.time.get_ticks()
+                    #if not a SET computer can make a turn
                     else:
                         computer_turn = True
+                #less than 3 cards were selected
                 else:
                     show_you_have_to_choose_3_cards = True
                     #reset selected
                     selected = []
-            #the computer needs to make a move
+            #if the timer runs out the computer needs to make a move
             elif timer - current_time + start_time + time_while_paused < 0 and help_not_needed and time_paused == False:
                 computer_turn = True
+                #deselect all cards
                 card1_selected = False
                 card2_selected = False
                 card3_selected = False
@@ -699,6 +710,7 @@ while running:
             #if it is the computer his turn
             if computer_turn:
                 computer_turn = False
+                #check if the game is over
                 if card.Card.pick_set(on_table) == False and len(stack) == 0:
                     if sc > sp:
                         loss_screen = True
@@ -706,6 +718,7 @@ while running:
                         win_screen = True
                     else:
                         draw_screen = True
+                #check if there exists a SET
                 elif card.Card.pick_set(on_table) == False:
                     #remove 3 cards and make new ones
                     on_table.remove(card10)
@@ -726,6 +739,7 @@ while running:
                     #reset selected
                     selected = []
                     start_time = pygame.time.get_ticks()
+                #there is a SET 
                 else:
                     #make selected_computer
                     for i in card.Card.pick_set(on_table):
@@ -743,89 +757,90 @@ while running:
                     
                     #reset selected
                     selected = []
+            #make the actual cards if they need to be made
             if make_card1 and card1 not in on_table:
                 new_card1 = False
                 make_card1 = False
                 card1 = card.Card.random(stack, stack_name)
                 card1_img = pygame.image.load('kaarten/' + card1[1] + '.gif').convert_alpha()
-                card1_button = button.Button(35, 65, card1_img, 1)
+                card1_button = button.Button(102, 65, card1_img, 1)
                 on_table.append(card1)
             if make_card2 and card2 not in on_table:
                 new_card2 = False
                 make_card2 = False
                 card2 = card.Card.random(stack, stack_name)
                 card2_img = pygame.image.load('kaarten/' + card2[1] + '.gif').convert_alpha()
-                card2_button = button.Button(35, 300, card2_img, 1)
+                card2_button = button.Button(102, 300, card2_img, 1)
                 on_table.append(card2)
             if make_card3 and card3 not in on_table:
                 new_card3 = False
                 make_card3 = False
                 card3 = card.Card.random(stack, stack_name)
                 card3_img = pygame.image.load('kaarten/' + card3[1] + '.gif').convert_alpha()
-                card3_button = button.Button(35, 535, card3_img, 1)
+                card3_button = button.Button(102, 535, card3_img, 1)
                 on_table.append(card3)
             if make_card4 and card4 not in on_table:
                 new_card4 = False
                 make_card4 = False
                 card4 = card.Card.random(stack, stack_name)
                 card4_img = pygame.image.load('kaarten/' + card4[1] + '.gif').convert_alpha()
-                card4_button = button.Button(170, 65, card4_img, 1)
+                card4_button = button.Button(237, 65, card4_img, 1)
                 on_table.append(card4)
             if make_card5 and card5 not in on_table:
                 new_card5 = False
                 make_card5 = False
                 card5 = card.Card.random(stack, stack_name)
                 card5_img = pygame.image.load('kaarten/' + card5[1] + '.gif').convert_alpha()
-                card5_button = button.Button(170, 300, card5_img, 1)
+                card5_button = button.Button(237, 300, card5_img, 1)
                 on_table.append(card5)
             if make_card6 and card6 not in on_table:
                 new_card6 = False
                 make_card6 = False
                 card6 = card.Card.random(stack, stack_name)
                 card6_img = pygame.image.load('kaarten/' + card6[1] + '.gif').convert_alpha()
-                card6_button = button.Button(170, 535, card6_img, 1)
+                card6_button = button.Button(237, 535, card6_img, 1)
                 on_table.append(card6)
             if make_card7 and card7 not in on_table:
                 new_card7 = False
                 make_card7 = False
                 card7 = card.Card.random(stack, stack_name)
                 card7_img = pygame.image.load('kaarten/' + card7[1] + '.gif').convert_alpha()
-                card7_button = button.Button(305, 65, card7_img, 1)
+                card7_button = button.Button(372, 65, card7_img, 1)
                 on_table.append(card7)
             if make_card8 and card8 not in on_table:
                 new_card8 = False
                 make_card8 = False
                 card8 = card.Card.random(stack, stack_name)
                 card8_img = pygame.image.load('kaarten/' + card8[1] + '.gif').convert_alpha()
-                card8_button = button.Button(305, 300, card8_img, 1)
+                card8_button = button.Button(372, 300, card8_img, 1)
                 on_table.append(card8)
             if make_card9 and card9 not in on_table:
                 new_card9 = False
                 make_card9 = False
                 card9 = card.Card.random(stack, stack_name)
                 card9_img = pygame.image.load('kaarten/' + card9[1] + '.gif').convert_alpha()
-                card9_button = button.Button(305, 535, card9_img, 1)
+                card9_button = button.Button(372, 535, card9_img, 1)
                 on_table.append(card9)
             if make_card10 and card10 not in on_table:
                 new_card10 = False
                 make_card10 = False
                 card10 = card.Card.random(stack, stack_name)
                 card10_img = pygame.image.load('kaarten/' + card10[1] + '.gif').convert_alpha()
-                card10_button = button.Button(440, 65, card10_img, 1)
+                card10_button = button.Button(507, 65, card10_img, 1)
                 on_table.append(card10)
             if make_card11 and card11 not in on_table:
                 new_card11 = False
                 make_card11 = False
                 card11 = card.Card.random(stack, stack_name)
                 card11_img = pygame.image.load('kaarten/' + card11[1] + '.gif').convert_alpha()
-                card11_button = button.Button(440, 300, card11_img, 1)
+                card11_button = button.Button(507, 300, card11_img, 1)
                 on_table.append(card11)
             if make_card12 and card12 not in on_table:
                 new_card12 = False
                 make_card12 = False
                 card12 = card.Card.random(stack, stack_name)
                 card12_img = pygame.image.load('kaarten/' + card12[1] + '.gif').convert_alpha()
-                card12_button = button.Button(440, 535, card12_img, 1)
+                card12_button = button.Button(507, 535, card12_img, 1)
                 on_table.append(card12)
             
             #update stack_count
