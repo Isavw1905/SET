@@ -4,4 +4,6 @@ SET is a card game where the goal is to collect as many sets as possible. There 
 * There are always 12 cards on the table, and the player who first recognizes a set gets a point. Afterward, the set is removed, and the cards are replenished to 12.
 * If, after a fixed time (e.g., 30 seconds), no set is found, the top 3 cards are removed, and 3 new cards are added.
 ## Manual
-To run the code all of the documents must be downloaded into the same file. The button and card files are simply 
+To run the code all of the documents must be downloaded into the same folder and pygame must be installed, the instructions can be found at https://www.geeksforgeeks.org/how-to-install-pygame-in-windows/ . Next you can open 'Main code.py' on your preffered IDE and run it. It should immediately open the game, which then speaks for itself. 
+### Making adaptations 
+If you would like to change the difficulty levels, you can find the timers at line 
